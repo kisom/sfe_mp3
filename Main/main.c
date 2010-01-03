@@ -2,18 +2,18 @@
 //					MP3 Development Platform
 //*******************************************************
 //#include <stdio.h>
-#include "LPC214x.h"
+#include "../lib/LPC214x.h"
 #include "setup.h"
 #include "MP3Dev.h"
-#include "serial.h"
-#include "rprintf.h"
+#include "../lib/serial.h"
+#include "../lib/rprintf.h"
 
 //*******************************************************
 //				Memory Management Libraries
 //*******************************************************
-#include "rootdir.h"
-#include "sd_raw.h"
-#include "fat16.h"
+#include "../lib/rootdir.h"
+#include "../lib/sd_raw.h"
+#include "../lib/fat16.h"
 
 //*******************************************************
 //				USB Libraries
@@ -42,7 +42,8 @@ static void timer1ISR(void);
 extern char white;	//Color "White" used in LCD Functions(From LCD_driver.h)
 extern char black;	//Color "black" used in LCD Functions(From LCD_driver.h)
 extern char red;	//Color	"red" used in LCD Functions(From LCD_driver.h)
-extern char green;  
+extern char green;      
+extern char blue;
 //*******************************************************
 //				Global Variables for Main
 //*******************************************************
@@ -140,8 +141,8 @@ unsigned long int numberOfChars=0;
 	if(NUMBEROFFILES%NUMROWS != 0)file_manager.total_pages+=1;
 	
 	file_manager.orientation =ORIENTUP;
-	file_manager.text_color=green;
-	file_manager.back_color=black;
+	file_manager.text_color=white;
+	file_manager.back_color=blue;
 	
 	file_manager.current_page=0;
 	file_manager.current_row=1;
