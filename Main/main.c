@@ -60,15 +60,16 @@ static DisplayStruct settings_menu;		//Settings Menu...
 static DisplayStruct *current_display;	//
 static int NUMBEROFFILES=0;
 
-int volume_setting=16, radio_channel=973;
+int volume_setting=12, radio_channel=973;
 char radio_enable=OFF;
 
 //*******************************************************
 //					Display Strings
 //*******************************************************
 const char welcome[22]="technomage musicbox:\n\r";
-const char NotFound[15]="File Not Found!";
-const char USB[14]="USB Connected!";
+const char technomage[11]="technomage\n";
+const char NotFound[15]="file not found!";
+const char USB[14]="USB connected!";
 const char newline[2] = "\n";
 const char volume[10] = "Amplitude";
 const char contrast[9] = "Contrast";
@@ -96,10 +97,16 @@ unsigned long int numberOfChars=0;
 	for(char i=0; i<2; i++)vs1002SetVolume(DECREASE);		//Lower the Volume!!
 	vs1002Finish();			//Restore the SPI I/O lines
 	
-	//Show the splash-screen (Sparkfun Logo)
 	LCDInit();				//Initialize the LCD
-	LCDClear(white);		//Clear the screen with white
-	LCDPrintLogo();			//Print the Sparkfun Logo
+
+        // modified the startup screen
+        LCDClear(black);		//Clear the screen with white
+        LCDPrintString("the", 0, green, 4, -8, ORIENTUP);
+        LCDPrintString(technomage, 0, green, 5, -5, ORIENTUP);
+        LCDPrintString("musicbox", 0, green, 6, -6, ORIENTUP);
+
+
+        delay_ms(900);
 	
 	//Initialize the FM Transmitter to 97.3
 	IOCLR1 |= FM_CS;			//Select SPI for FM Transmitter
@@ -141,8 +148,8 @@ unsigned long int numberOfChars=0;
 	if(NUMBEROFFILES%NUMROWS != 0)file_manager.total_pages+=1;
 	
 	file_manager.orientation =ORIENTUP;
-	file_manager.text_color=white;
-	file_manager.back_color=blue;
+	file_manager.text_color=green;
+	file_manager.back_color=black;
 	
 	file_manager.current_page=0;
 	file_manager.current_row=1;
@@ -162,8 +169,8 @@ unsigned long int numberOfChars=0;
 	while(1){
 		if(IOPIN0 & (1<<23))
 		{
-			LCDClear(white);
-			LCDPrintString(USB, 0, black, 7,4,current_display->orientation);
+			LCDClear(black);
+			LCDPrintString(USB, 0, green, 7, 0,current_display->orientation);
 			VICIntEnClr = 0x30;		//Stop all interrupts to allow USB communication
 			main_msc();
 			reset();
